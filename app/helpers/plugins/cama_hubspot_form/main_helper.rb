@@ -183,7 +183,7 @@ module Plugins::CamaHubspotForm::MainHelper
       consent_field_data = JSON.parse(form.properties['metaData'].last['value'])
       label_text = consent_field_data['communicationConsentCheckboxes'].first['label']
       label = "<label><input type='checkbox' name='hs_legal_basis' value='Legitimate interest – prospect/lead'> #{label_text}</label>"
-      html = "#{label} <p>#{consent_field_data["privacyPolicyText"]}</p>"
+      html = "<div class='cama-hubspot-form-consent-wrapper'>#{label} <p>#{consent_field_data["privacyPolicyText"]}</p></div>"
     end
     return html
   end
