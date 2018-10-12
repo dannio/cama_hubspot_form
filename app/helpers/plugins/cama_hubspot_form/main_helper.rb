@@ -51,35 +51,43 @@ module Plugins::CamaHubspotForm::MainHelper
       dependent_field_filters = field['dependentFieldFilters']
       validation_notice       = "请完成表单"
       temp                    = ""
-      label                   = "<label>#{field['label']}"
-      if field['required'] 
-        label                += "*"
-      end
-      label                  += "</label>"
-
-      html += label
 
       case field['fieldType'].to_s
         when 'textarea'
-          temp = "<textarea style='#{hidden}' class='marginB5' name='#{field['name']}' type='#{field['fieldType']}'"
+          temp = cama_hubspot_form_field_label(field)
+          temp += "<textarea style='#{hidden}' class='marginB5' name='#{field['name']}' type='#{field['fieldType']}'"
           if field['required'] 
             temp += "required='#{field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('') "
           end
           temp += "></textarea>"
         when 'radio'
-          temp =  cama_hubspot_form_select_multiple_bootstrap(field, "radio")
+          temp = cama_hubspot_form_field_label(field)
+          temp += cama_hubspot_form_select_multiple_bootstrap(field, "radio")
         when 'checkbox'
-          temp =  cama_hubspot_form_select_multiple_bootstrap(field, "checkbox")
+          temp = cama_hubspot_form_field_label(field)
+          temp += cama_hubspot_form_select_multiple_bootstrap(field, "checkbox")
         when 'booleancheckbox'
-          temp =  cama_hubspot_form_select_multiple_bootstrap(field, "checkbox")
+          temp = "<label>"
+          temp +=  "<input style='#{hidden}' class='marginB5' name='#{field['name']}' type='checkbox'"
+          if field['required'] 
+            temp += "required='#{field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('')"
+          end
+          temp += ">"
+          temp += " #{field['label']}"
+          if field['required'] 
+            temp += "*"
+          end
+          temp += "</label>"
         when 'text'
-          temp = "<input style='#{hidden}' class='marginB5' name='#{field['name']}' type='#{field['fieldType']}'"
+          temp = cama_hubspot_form_field_label(field)
+          temp += "<input style='#{hidden}' class='marginB5' name='#{field['name']}' type='#{field['fieldType']}'"
           if field['required'] 
             temp += "required='#{field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('') "
           end
           temp += ">"
         when 'select'
-          temp = cama_hubspot_form_select_multiple_bootstrap(field, "select")
+          temp = cama_hubspot_form_field_label(field)
+          temp += cama_hubspot_form_select_multiple_bootstrap(field, "select")
         else
       end
       html += temp
@@ -103,25 +111,25 @@ module Plugins::CamaHubspotForm::MainHelper
         html += label
         case dependent_form_field['fieldType'].to_s
           when 'textarea'
-            temp2 = "<textarea style='#{hidden}' class='marginB5' name='#{dependent_form_field['name']}' type='#{dependent_form_field['fieldType']}'"
-            if field['required'] 
-              temp2 += "required='#{dependent_form_field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('') "
-            end
-            temp2 += "></textarea>"
+            temp2 = cama_hubspot_form_field_label(field)
+            temp2 += "<textarea style='#{hidden}' class='marginB5' name='#{dependent_form_field['name']}' type='#{dependent_form_field['fieldType']}'></textarea>"
           when 'radio'
-            temp2=  cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "radio")
+            temp2 = cama_hubspot_form_field_label(field)
+            temp2 += cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "radio")
           when 'checkbox'
-            temp2=  cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "checkbox")
+            temp2 = cama_hubspot_form_field_label(field)
+            temp2 += cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "checkbox")
           when 'booleancheckbox'
-            temp2=  cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "checkbox")
+            temp2 = "<label>"
+            temp2 += "<input style='#{hidden}' class='marginB5' name='#{dependent_form_field['name']}' type='checkbox'>"
+            temp2 += " #{field['label']}"
+            temp2 += "</label>"
           when 'text'
-            temp2 = "<input style='#{hidden}' class='marginB5' name='#{dependent_form_field['name']}' type='#{dependent_form_field['fieldType']}'"
-            if field['required'] 
-              temp2 += "required='#{dependent_form_field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('') "
-            end
-            temp2 += ">"
+            temp2 = cama_hubspot_form_field_label(field)
+            temp2 += "<input style='#{hidden}' class='marginB5' name='#{dependent_form_field['name']}' type='#{dependent_form_field['fieldType']}'>"
           when 'select'
-            temp2 = cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "select")
+            temp2 = cama_hubspot_form_field_label(field)
+            temp2 += cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "select")
           else
         end
         html += temp2
@@ -158,7 +166,7 @@ module Plugins::CamaHubspotForm::MainHelper
                       #{op['label']}
                     </label>
                   </div>"
-      elsif  type == "checkbox" || type == "booleancheckbox"
+      elsif type == "checkbox"
         html += "<div class='#{type}'  class='#{dependent_class}'>
                     <label for='#{f_name}'>
                       <input type='checkbox' name='#{f_name}[]' value='#{op['value']}'>
@@ -186,5 +194,14 @@ module Plugins::CamaHubspotForm::MainHelper
       html = "<div class='cama-hubspot-form-consent-wrapper'>#{label} <p>#{consent_field_data["privacyPolicyText"]}</p></div>"
     end
     return html
+  end
+
+  def cama_hubspot_form_field_label(field)
+    label = "<label>#{field['label']}"
+    if field['required'] 
+      label += "*"
+    end
+    label += "</label>"
+    label
   end
 end
