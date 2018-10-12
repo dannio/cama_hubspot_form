@@ -1,0 +1,25 @@
+{
+  "title": "Camaleon CMS Hubspot Form",
+  "descr": "My attempt at drawing forms from hubspot",
+  "key": "cama_hubspot_form",
+  "helpers": [
+    "Plugins::CamaHubspotForm::MainHelper"
+  ],
+  "hooks": {
+    "admin_before_load": [
+      "hubspot_form_admin_before_load"
+    ],
+    "on_destroy": [
+      "hubspot_form_on_destroy"
+    ],
+    "on_active": [
+      "hubspot_form_on_active"
+    ],
+    "on_inactive": [
+      "hubspot_form_on_inactive"
+    ],
+    "app_before_load": ["hubspot_form_app_before_load"],
+    "front_before_load": ["hubspot_form_front_before_load"]
+    //here you can add all your hooks (read documentation)
+  }
+}

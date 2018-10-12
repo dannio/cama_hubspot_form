@@ -1,0 +1,47 @@
+<div class="page-title">
+    <h2><span class="fa fa-archive"></span> <%= t('.title', default: 'Hubspot Form') %></h2>
+</div>
+<div class="page-content-wrap">
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- START BASIC TABLE SAMPLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading ui-draggable-handle">
+                    <h3 class="panel-title"><%= t('.list_forms', default: 'Forms List') %></h3>
+                </div>
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><%= t('.name', default: 'Name') %></th>
+                            <th><%= t('.guid', default: 'Guid') %></th>
+                            <th><%= t('.redirect', default: 'Redirect') %></th>
+                            <th><%= t('.shortcode', default: 'Shortcode') %></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <% @forms.each do |item| %>
+                            <% properties = item.properties %>
+                            <tr>
+                                <td><%= properties['name'] %> </td>
+                                <td><%= properties['guid'] %></td>
+                                <td><%= properties['redirect'] %></td>
+                                <td><%= cama_hubspot_form_shortcode(properties['guid']) %></td>
+                            </tr>
+                        <% end %>
+
+                        </tbody>
+                    </table>
+                    <%= content_tag("div", raw(t('plugin.hubspot_form.msg_data_found_list', default: 'No records found')), class: "alert alert-warning") if @forms.empty? %>
+                    <%= raw cama_do_pagination(@forms) %>
+                </div>
+            </div>
+            <!-- END BASIC TABLE SAMPLE -->
+        </div>
+    </div>
+
+    <!-- END PAGE CONTENT WRAPPER -->
+</div>
