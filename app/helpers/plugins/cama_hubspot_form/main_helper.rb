@@ -68,7 +68,9 @@ module Plugins::CamaHubspotForm::MainHelper
           temp += "></textarea>"
         when 'radio'
           temp =  cama_hubspot_form_select_multiple_bootstrap(field, "radio")
-        when 'checkboxes'
+        when 'checkbox'
+          temp =  cama_hubspot_form_select_multiple_bootstrap(field, "checkbox")
+        when 'booleancheckbox'
           temp =  cama_hubspot_form_select_multiple_bootstrap(field, "checkbox")
         when 'text'
           temp = "<input style='#{hidden}' class='marginB5' name='#{field['name']}' type='#{field['fieldType']}'"
@@ -110,6 +112,8 @@ module Plugins::CamaHubspotForm::MainHelper
             temp2=  cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "radio")
           when 'checkbox'
             temp2=  cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "checkbox")
+          when 'booleancheckbox'
+            temp2=  cama_hubspot_form_select_multiple_bootstrap(dependent_form_field, "checkbox")
           when 'text'
             temp2 = "<input style='#{hidden}' class='marginB5' name='#{dependent_form_field['name']}' type='#{dependent_form_field['fieldType']}'"
             if field['required'] 
@@ -147,10 +151,17 @@ module Plugins::CamaHubspotForm::MainHelper
 
     options.each do |op|
       label = op['label'].translate
-      if type == "radio" || type == "checkbox"
+      if type == "radio"
         html += "<div class='#{type}'  class='#{dependent_class}'>
                     <label for='#{f_name}'>
-                      <input type='#{type}' name='#{f_name}[]' value='#{op['value']}'>
+                      <input type='radio' name='#{f_name}[]' value='#{op['value']}'>
+                      #{op['label']}
+                    </label>
+                  </div>"
+      elsif  type == "checkbox" || type == "booleancheckbox"
+        html += "<div class='#{type}'  class='#{dependent_class}'>
+                    <label for='#{f_name}'>
+                      <input type='checkbox' name='#{f_name}[]' value='#{op['value']}'>
                       #{op['label']}
                     </label>
                   </div>"
@@ -172,7 +183,7 @@ module Plugins::CamaHubspotForm::MainHelper
       consent_field_data = JSON.parse(form.properties['metaData'].last['value'])
       label_text = consent_field_data['communicationConsentCheckboxes'].first['label']
       label = "<label><input type='checkbox' name='hs_legal_basis' value='Legitimate interest – prospect/lead'> #{label_text}</label>"
-      html = "#{label} #{consent_field_data["privacyPolicyText"]}"
+      html = "#{label} <p>#{consent_field_data["privacyPolicyText"]}</p>"
     end
     return html
   end
