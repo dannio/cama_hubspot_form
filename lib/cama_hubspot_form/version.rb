@@ -1,3 +1,3 @@
 module CamaHubspotForm
-  VERSION = "0.0.29"
+  VERSION = "0.0.3"
 end
