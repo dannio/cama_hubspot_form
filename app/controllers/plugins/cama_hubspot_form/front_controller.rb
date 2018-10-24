@@ -1,6 +1,5 @@
 class Plugins::CamaHubspotForm::FrontController < CamaleonCms::Apps::PluginsFrontController
   include Plugins::CamaHubspotForm::MainHelper
-  include Plugins::CamaHubspotForm::HubspotFormControllerConcern
   
   # here add your custom functions
   def save_form
@@ -16,6 +15,5 @@ class Plugins::CamaHubspotForm::FrontController < CamaleonCms::Apps::PluginsFron
     else
       redirect_to form.properties['redirect']
     end
-    
   end
 end
