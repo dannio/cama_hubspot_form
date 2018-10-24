@@ -14,11 +14,7 @@ Rails.application.routes.draw do
       scope :admin, as: 'admin', path: PluginRoutes.system_info['admin_path_name'] do
         namespace 'plugins' do
           namespace 'cama_hubspot_form' do
-            resources :admin_forms  do
-              delete 'del_response'
-              get 'responses'
-              get 'item_field', on: :collection
-            end
+            resources :admin_forms, only: :index
           end
         end
       end
