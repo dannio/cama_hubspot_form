@@ -52,7 +52,7 @@ module Plugins::CamaHubspotForm::MainHelper
         str_values = dependent['filters'].map {|x| x['strValues']}.join('###')
         str_value  = dependent['filters'].map {|x| x['strValue']}.first
         dependent_form_field = dependent['dependentFormField']
-        html += "<div class='dependant_fields #{field['name']}' data-condition='#{str_filter}' data-strValues='#{str_values}' data-strValue='#{str_value}'>"
+        html += "<div class='dependant_fields #{field['name']}' data-required='#{dependent['dependentFormField']['required']}' data-condition='#{str_filter}' data-strValues='#{str_values}' data-strValue='#{str_value}'>"
         html += cama_hubspot_form_element_bootstrap_object_field(dependent, false)
         html += "</div>"
       end
@@ -69,7 +69,7 @@ module Plugins::CamaHubspotForm::MainHelper
     validation_notice       = "请完成表单"
     temp                    = ""
     dependent_field_filters = field['dependentFieldFilters']
-    if dependent_field_filters
+    if dependent_field_filters.present?
       dependent_class = "has_dependents"
     end
     case field['fieldType'].to_s
@@ -120,7 +120,7 @@ module Plugins::CamaHubspotForm::MainHelper
     dependent_class = ""
     type = field['fieldType']
     html = ""
-    if dependent_field_filters
+    if dependent_field_filters.present?
       dependent_class = "has_dependents"
     end
     if type == "select"
