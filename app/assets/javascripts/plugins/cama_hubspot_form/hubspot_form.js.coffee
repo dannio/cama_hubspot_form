@@ -25,7 +25,6 @@ $(document).ready ->
       str_values = $(this).attr('data-strValues')
       condition = $(this).attr('data-condition')
       keys = str_values.split('###')
-      console.log($.inArray(input_value, keys))
       if condition == 'IS_NOT_EMPTY'
         if input_value
           $(this).show()
