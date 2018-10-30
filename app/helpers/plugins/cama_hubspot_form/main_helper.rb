@@ -128,10 +128,9 @@ module Plugins::CamaHubspotForm::MainHelper
       html += "<option value=''>#{field['unselectedLabel']}</option>"
     end
     options.each do |op|
-      label = op['label'].translate
       if type == "radio" || type == "checkbox"
-        html += "<div class='#{type}'  class='#{dependent_class}'>
-                    <label for='#{f_name}'>
+        html += "<div class='#{type} #{dependent_class}' id='#{field['name']}'>
+                    <label>
                       <input type='#{type}' name='#{f_name}[]' value='#{op['value']}'>
                       #{op['label']}
                     </label>

@@ -14,9 +14,28 @@ $(document).ready ->
         if $.inArray(option, keys) != -1 or str_values == ''
           $(this).show()
       else if condition == 'SET_NOT_ANY'
-        if $.inArray(option, keys) != -1 or str_values == ''
-          $(this).hide()
+        if $.inArray(option, keys) == -1 or str_values == ''
+          $(this).show()
   
+  $('.radio.has_dependents input').on 'change', ->
+    input_value = this.value
+    id = $(this).closest('div').attr('id')
+    $.each $('.' + id), (key, value) ->
+      $(this).hide()
+      str_values = $(this).attr('data-strValues')
+      condition = $(this).attr('data-condition')
+      keys = str_values.split('###')
+      console.log($.inArray(input_value, keys))
+      if condition == 'IS_NOT_EMPTY'
+        if input_value
+          $(this).show()
+      else if condition == 'SET_ANY'
+        if $.inArray(input_value, keys) != -1 or str_values == ''
+          $(this).show()
+      else if condition == 'SET_NOT_ANY'
+        if $.inArray(input_value, keys) == -1 or str_values == ''
+          $(this).show()
+
   $('input.has_dependents, textarea.has_dependents').on 'keyup', ->
     input_value = $(this).val()
     id = $(this).attr('id')
