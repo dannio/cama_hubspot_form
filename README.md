@@ -17,3 +17,12 @@ It creates a connection to the designated Hubspot account via the [ruby-hubspot 
 `gem "cama_hubspot_form", '0.0.5', github: "dannio/cama_hubspot_form"`
 * Install `bundle install`
 * Activate Plugin in Camaleon admin panel
+
+# Usage
+* Create and set up a form in hubspot
+* Go to Settings in the Admin panel of your camaleon installation
+* Copy the shortcode of your new form and paste into editor/call shortcode from your template
+
+# Note
+* Redirects are set within the forms in Hubspot
+* Dependent field conditions are supported
