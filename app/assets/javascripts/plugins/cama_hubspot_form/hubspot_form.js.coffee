@@ -9,13 +9,18 @@ $(document).ready ->
     id = $(this).closest('div').attr('id')
     checkRadio(input_value, id)
 
+  $('.hubspot-form .booleancheckbox.has_dependents').each ->
+    value = $(this).is(':checked')
+    id = $(this).attr('id')
+    checkBooleanCheckbox(value, id)
+
   $('.hubspot-form .checkbox.has_dependents input').each ->
     name = $(this).attr('name')
     values = $('input[type=checkbox][name=\'' + name + '\']:checked').map((_, el) ->
       $(el).val()
     ).get()
     id = $(this).closest('div').attr('id')
-    checkCheckbox(name, values, id)
+    checkCheckbox(values, id)
 
   $('.hubspot-form input.has_dependents, .hubspot-form textarea.has_dependents').each ->
     input_value = $(this).val()
@@ -38,7 +43,12 @@ $(document).ready ->
       $(el).val()
     ).get()
     id = $(this).closest('div').attr('id')
-    checkCheckbox(name, values, id)
+    checkCheckbox(values, id)
+
+  $('.hubspot-form .booleancheckbox.has_dependents').on 'change', ->
+    value = $(this).is(':checked')
+    id = $(this).attr('id')
+    checkBooleanCheckbox(value, id)
 
   $('.hubspot-form input.has_dependents, .hubspot-form textarea.has_dependents').on 'keyup', ->
     input_value = $(this).val()
@@ -91,6 +101,7 @@ checkInput = (input_value, id) ->
 checkSelect = (option, id) ->
   $.each $('.' + id), (key, value) ->
     $(this).hide()
+    $('input, textarea, select', this).prop("required", false)
     str_values = $(this).attr('data-strValues')
     condition = $(this).attr('data-condition')
     required  = $(this).attr('data-required')
@@ -116,6 +127,7 @@ checkSelect = (option, id) ->
 checkRadio = (input_value, id) ->
   $.each $('.' + id), (key, value) ->
     $(this).hide()
+    $('input, textarea, select', this).prop("required", false)
     str_values = $(this).attr('data-strValues')
     condition = $(this).attr('data-condition')
     required  = $(this).attr('data-required')
@@ -136,9 +148,28 @@ checkRadio = (input_value, id) ->
         if required == 'true'
           $('input, textarea, select', this).prop("required", true)
 
-checkCheckbox = (name, values, id) ->
+checkBooleanCheckbox = (input_value, id) ->
   $.each $('.' + id), (key, value) ->
     $(this).hide()
+    $('input, textarea, select', this).prop("required", false)
+    str_value = $(this).attr('data-strValues')
+    condition = $(this).attr('data-condition')
+    required  = $(this).attr('data-required')
+    if condition == 'EQ'
+      if input_value.toString() == str_value
+        $(this).show()
+        if required == 'true'
+          $('input, textarea, select', this).prop("required", true)
+    else if condition == 'IS_NOT_EMPTY'
+      if input_value.toString() == 'true'
+        $(this).show()
+        if required == 'true'
+          $('input, textarea, select', this).prop("required", true)
+
+checkCheckbox = (values, id) ->
+  $.each $('.' + id), (key, value) ->
+    $(this).hide()
+    $('input, textarea, select', this).prop("required", false)
     str_values = $(this).attr('data-strValues')
     condition = $(this).attr('data-condition')
     required  = $(this).attr('data-required')
