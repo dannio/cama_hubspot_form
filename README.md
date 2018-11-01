@@ -26,3 +26,4 @@ It creates a connection to the designated Hubspot account via the [ruby-hubspot 
 # Note
 * Redirects are set within the forms in Hubspot
 * Dependent field conditions are supported
+* File upload field not supported
