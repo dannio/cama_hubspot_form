@@ -88,7 +88,7 @@ module Plugins::CamaHubspotForm::MainHelper
         temp += cama_hubspot_form_select_multiple_bootstrap(field, "checkbox")
       when 'booleancheckbox'
         temp = "<label>"
-        temp += "<input style='#{hidden}' class='#{dependent_class}' id='#{field['name']}' name='#{field['name']}' type='checkbox' value='Yes'"
+        temp += "<input style='#{hidden}' class='checkbox #{dependent_class}' id='#{field['name']}' name='#{field['name']}' type='checkbox' value='Yes'"
         if field['required'] && parent
           temp += "required='#{field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('')"
         end
