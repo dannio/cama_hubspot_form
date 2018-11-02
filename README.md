@@ -14,7 +14,7 @@ It creates a connection to the designated Hubspot account via the [ruby-hubspot 
 # Installation
 * Within your Camaleon installation, set up ruby-hubspot and ensure it's connected and running. (Can test in rails console by running `Hubspot::Form.all`)
 * Add the plugin into your Gemfile
-`gem "cama_hubspot_form", '0.0.7', github: "dannio/cama_hubspot_form"`
+`gem "cama_hubspot_form", '0.0.8', github: "dannio/cama_hubspot_form"`
 * Install `bundle install`
 * Activate Plugin in Camaleon admin panel
 
