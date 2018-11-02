@@ -75,7 +75,7 @@ module Plugins::CamaHubspotForm::MainHelper
     case field['fieldType'].to_s
       when 'textarea'
         temp = cama_hubspot_form_field_label(field)
-        temp += "<textarea style='#{hidden}' class='#{dependent_class}' id='#{field['name']}' name='#{field['name']}' type='#{field['fieldType']}'"
+        temp += "<textarea style='#{hidden}' class='#{dependent_class} textarea' id='#{field['name']}' name='#{field['name']}' type='#{field['fieldType']}'"
         if field['required'] && parent
           temp += "required='#{field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('') "
         end
@@ -100,7 +100,7 @@ module Plugins::CamaHubspotForm::MainHelper
         temp += "</label>"
       when 'text'
         temp = cama_hubspot_form_field_label(field)
-        temp += "<input style='#{hidden}' class='#{dependent_class}' id='#{field['name']}' name='#{field['name']}' type='#{field['fieldType']}'"
+        temp += "<input style='#{hidden}' class='#{dependent_class} input' id='#{field['name']}' name='#{field['name']}' type='#{field['fieldType']}'"
         if field['required'] && parent
           temp += "required='#{field['required']}' oninvalid='this.setCustomValidity(\"#{validation_notice}\")' oninput='setCustomValidity('') "
         end

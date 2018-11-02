@@ -22,7 +22,7 @@ $(document).ready ->
     id = $(this).closest('div').attr('id')
     checkCheckbox(values, id)
 
-  $('.hubspot-form input.has_dependents, .hubspot-form textarea.has_dependents').each ->
+  $('.hubspot-form .input.has_dependents, .hubspot-form .textarea.has_dependents').each ->
     input_value = $(this).val()
     id = $(this).attr('id')
     checkInput(input_value, id)
@@ -50,7 +50,7 @@ $(document).ready ->
     id = $(this).attr('id')
     checkBooleanCheckbox(value, id)
 
-  $('.hubspot-form input.has_dependents, .hubspot-form textarea.has_dependents').on 'keyup', ->
+  $('.hubspot-form .input.has_dependents, .hubspot-form .textarea.has_dependents').on 'keyup', ->
     input_value = $(this).val()
     id = $(this).attr('id')
     checkInput(input_value, id)
